@@ -23,3 +23,20 @@ Ce dossier contient la configuration de reference de l agent Wazuh Linux.
   - brute-force SSH,
   - flood ICMP,
   - activite sudo/su/cron/auditd.
+
+## Etapes et commandes
+
+Sur l agent Linux (avec droits root):
+
+```bash
+sudo cp config/wazuh/linux/ossec.conf /var/ossec/etc/ossec.conf
+sudo systemctl restart wazuh-agent
+sudo systemctl status wazuh-agent --no-pager
+```
+
+Verification logs agent:
+
+```bash
+sudo tail -n 100 /var/ossec/logs/ossec.log
+```
+

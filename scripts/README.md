@@ -39,3 +39,41 @@ Ce dossier contient les scripts executables pour appliquer la configuration et v
 
 - Standardise les operations et limite les erreurs manuelles.
 - Accelere onboarding et troubleshooting.
+
+## Commandes pretes a executer
+
+1. Appliquer PHASE4 sur manager Wazuh Docker:
+
+```bash
+sudo PROJECT_DIR="$(pwd)" MANAGER_CONTAINER=single-node-wazuh.manager-1 bash scripts/apply_phase4_wazuh_docker.sh
+```
+
+2. Lancer simulation Linux:
+
+```bash
+bash scripts/run_phase4_linux_attack_test.sh --target-ip 10.10.0.22
+```
+
+3. Lancer simulation Windows:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_phase4_windows_attack_test.ps1 -TargetIp 10.10.0.33
+```
+
+4. Valider rule.id Linux:
+
+```bash
+python3 scripts/validate_phase4_rule_ids.py --mode linux --container single-node-wazuh.manager-1
+```
+
+5. Valider rule.id Windows:
+
+```bash
+python3 scripts/validate_phase4_rule_ids.py --mode windows --container single-node-wazuh.manager-1
+```
+
+6. Valider toutes les detections:
+
+```bash
+python3 scripts/validate_phase4_rule_ids.py --mode full --container single-node-wazuh.manager-1
+```

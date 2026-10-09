@@ -29,3 +29,22 @@ Ce dossier decrit le deploiement MISP en conteneurs et sa configuration TI.
 - Changer les mots de passe par defaut avant usage durable.
 - Verifier que BASEURL pointe vers l adresse reelle du lab.
 - Controler la frequence de sync des feeds pour eviter la surcharge.
+
+## Etapes et commandes
+
+Depuis la racine du projet:
+
+```bash
+docker compose -f config/misp/docker-compose.yaml up -d
+docker compose -f config/misp/docker-compose.yaml ps
+docker compose -f config/misp/docker-compose.yaml logs -f misp
+```
+
+Acces interface:
+- URL par defaut: http://localhost:8080
+
+Arreter la stack MISP:
+
+```bash
+docker compose -f config/misp/docker-compose.yaml down
+```

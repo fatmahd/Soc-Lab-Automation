@@ -35,3 +35,23 @@ Chargees depuis config/.env (copiee dans /var/ossec/integrations/.env cote manag
 - Tu veux ajouter de nouveaux types d observables.
 - Tu veux changer la logique de deduplication.
 - Tu veux ajuster mapping severite Wazuh -> TheHive.
+
+## Etapes et commandes
+
+1. Tester le parser localement (sans creation d alerte TheHive):
+
+```bash
+python automation/test_payloads/run_collect_artifacts_samples.py
+```
+
+2. Tester l integration sur un payload unique (si THEHIVE_URL et THEHIVE_API_KEY sont configures):
+
+```bash
+python automation/wazuh_to_thehive.py automation/test_payloads/linux_ufw_alert.json
+```
+
+3. Appliquer la version script cote manager Docker Wazuh:
+
+```bash
+sudo PROJECT_DIR="$(pwd)" MANAGER_CONTAINER=single-node-wazuh.manager-1 bash scripts/apply_phase4_wazuh_docker.sh
+```

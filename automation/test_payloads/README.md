@@ -46,3 +46,23 @@ Ce dossier est essentiel pour:
 - detecter rapidement une regression,
 - montrer a un nouveau membre comment la normalisation d observables fonctionne.
 
+## Etapes et commandes
+
+Depuis la racine du projet:
+
+```bash
+python automation/test_payloads/run_collect_artifacts_samples.py
+```
+
+Tester seulement un echantillon (Linux):
+
+```bash
+python automation/wazuh_to_thehive.py automation/test_payloads/linux_ufw_alert.json
+```
+
+Tester un autre echantillon (Windows Sysmon):
+
+```bash
+python automation/wazuh_to_thehive.py automation/test_payloads/sysmon_network_alert.json
+```
+

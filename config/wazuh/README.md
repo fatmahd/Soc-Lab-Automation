@@ -27,3 +27,18 @@ Ce dossier contient le coeur de detection Wazuh du projet.
 
 - C est ici que se regle la precision detection (bruit vs couverture).
 - Toute evolution detection doit passer par ces regles et etre retestee.
+
+## Etapes et commandes
+
+Depuis la racine du projet, reappliquer regles + integration dans le manager Docker:
+
+```bash
+sudo PROJECT_DIR="$(pwd)" MANAGER_CONTAINER=single-node-wazuh.manager-1 bash scripts/apply_phase4_wazuh_docker.sh
+```
+
+Verifier dans le conteneur manager:
+
+```bash
+docker exec single-node-wazuh.manager-1 sh -lc "ls -1 /var/ossec/etc/rules | head"
+docker exec single-node-wazuh.manager-1 sh -lc 'grep -R "<rule id=\"1004" /var/ossec/etc/rules'
+```

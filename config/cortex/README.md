@@ -26,3 +26,19 @@ Ce dossier contient la stack Cortex et son moteur de stockage.
 - Verifier que /opt/cortex/jobs existe sur l hote.
 - Verifier que le socket Docker est accessible.
 - Surveiller RAM (Elasticsearch + Cortex peuvent etre gourmands).
+
+## Etapes et commandes
+
+Depuis la racine du projet:
+
+```bash
+docker compose -f config/cortex/docker-compose.yml up -d
+docker compose -f config/cortex/docker-compose.yml ps
+docker compose -f config/cortex/docker-compose.yml logs -f cortex
+```
+
+Arreter la stack Cortex:
+
+```bash
+docker compose -f config/cortex/docker-compose.yml down
+```

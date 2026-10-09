@@ -27,3 +27,24 @@ Ce dossier contient les regles Windows custom de PHASE4.
 
 - Ces regles supposent que les events firewall/Sysmon sont bien collectes par l agent.
 - Toute modification doit etre revalidee avec les scripts de tests Windows.
+
+## Etapes et commandes
+
+1. Appliquer la configuration PHASE4:
+
+```bash
+sudo PROJECT_DIR="$(pwd)" MANAGER_CONTAINER=single-node-wazuh.manager-1 bash scripts/apply_phase4_wazuh_docker.sh
+```
+
+2. Lancer simulation Windows (poste Windows, PowerShell admin):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_phase4_windows_attack_test.ps1 -TargetIp 10.10.0.33
+```
+
+3. Valider les rule.id Windows detectes:
+
+```bash
+python3 scripts/validate_phase4_rule_ids.py --mode windows --container single-node-wazuh.manager-1
+```
+

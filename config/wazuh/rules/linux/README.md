@@ -30,3 +30,24 @@ Ce dossier contient les regles Linux custom de PHASE4.
   - deni de service,
   - persistence et usage privilegies,
   - incidents disponibilite.
+
+## Etapes et commandes
+
+1. Appliquer la configuration PHASE4:
+
+```bash
+sudo PROJECT_DIR="$(pwd)" MANAGER_CONTAINER=single-node-wazuh.manager-1 bash scripts/apply_phase4_wazuh_docker.sh
+```
+
+2. Lancer simulation Linux:
+
+```bash
+bash scripts/run_phase4_linux_attack_test.sh --target-ip 10.10.0.22
+```
+
+3. Valider les rule.id Linux detectes:
+
+```bash
+python3 scripts/validate_phase4_rule_ids.py --mode linux --container single-node-wazuh.manager-1
+```
+

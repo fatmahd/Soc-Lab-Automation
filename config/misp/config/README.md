@@ -17,3 +17,19 @@ Ce dossier contient les presets de configuration MISP importables.
 
 - Adapter les feeds aux besoins reels du SOC.
 - Desactiver les feeds non utiles pour limiter bruit et volume.
+
+## Etapes et commandes
+
+Verifier que le preset est present:
+
+```bash
+ls -l config/misp/config/default.json
+```
+
+PowerShell:
+
+```powershell
+Get-Item config/misp/config/default.json
+```
+
+Apres demarrage MISP, utiliser ce preset pour alimenter les feeds TI selon vos besoins.

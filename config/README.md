@@ -35,3 +35,31 @@ Ce dossier centralise toutes les configurations techniques du SOC lab.
 - Ne jamais committer de secrets reels dans ce dossier.
 - Utiliser .env.example comme template, puis creer config/.env localement.
 - Apres modification Wazuh, reappliquer via scripts/apply_phase4_wazuh_docker.sh.
+
+## Etapes et commandes
+
+1. Initialiser le fichier d environnement:
+
+```bash
+cp config/.env.example config/.env
+```
+
+PowerShell:
+
+```powershell
+Copy-Item config/.env.example config/.env
+```
+
+2. Demarrer les stacks de ce dossier:
+
+```bash
+docker compose -f config/cortex/docker-compose.yml up -d
+docker compose -f config/misp/docker-compose.yaml up -d
+docker compose -f config/shuffle/docker-compose.yaml up -d
+```
+
+3. Reappliquer les regles/integration Wazuh apres changement:
+
+```bash
+sudo PROJECT_DIR="$(pwd)" MANAGER_CONTAINER=single-node-wazuh.manager-1 bash scripts/apply_phase4_wazuh_docker.sh
+```

@@ -133,3 +133,43 @@ Quand tout est en place:
 - Une alerte est creee dans TheHive avec observables exploitables.
 - Les enrichissements donnent du contexte de priorisation.
 - L analyste valide les actions de containment avec tracabilite.
+
+## Demarrage rapide (commandes)
+
+1. Creer le fichier d environnement:
+
+```bash
+cp config/.env.example config/.env
+```
+
+PowerShell:
+
+```powershell
+Copy-Item config/.env.example config/.env
+```
+
+2. Demarrer les stacks conteneurisees:
+
+```bash
+docker compose -f config/cortex/docker-compose.yml up -d
+docker compose -f config/misp/docker-compose.yaml up -d
+docker compose -f config/shuffle/docker-compose.yaml up -d
+```
+
+3. Appliquer PHASE4 sur le manager Wazuh Docker:
+
+```bash
+sudo PROJECT_DIR="$(pwd)" MANAGER_CONTAINER=single-node-wazuh.manager-1 bash scripts/apply_phase4_wazuh_docker.sh
+```
+
+4. Lancer les tests d attaque puis validation:
+
+```bash
+bash scripts/run_phase4_linux_attack_test.sh --target-ip 10.10.0.22
+python3 scripts/validate_phase4_rule_ids.py --mode linux --container single-node-wazuh.manager-1
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_phase4_windows_attack_test.ps1 -TargetIp 10.10.0.33
+python scripts/validate_phase4_rule_ids.py --mode windows --container single-node-wazuh.manager-1
+```

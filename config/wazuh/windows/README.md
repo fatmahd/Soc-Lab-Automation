@@ -14,3 +14,20 @@ Ce dossier contient la configuration de reference de l agent Wazuh Windows.
 
 - Permet la detection Windows firewall, brute force logon, et scenarios Sysmon.
 - Evite de filtrer des events critiques pour la correlation.
+
+## Etapes et commandes
+
+Sur l agent Windows (PowerShell admin):
+
+```powershell
+Copy-Item config/wazuh/windows/ossec.conf "C:\Program Files (x86)\ossec-agent\ossec.conf" -Force
+Restart-Service WazuhSvc
+Get-Service WazuhSvc
+```
+
+Verification des derniers logs agent:
+
+```powershell
+Get-Content "C:\Program Files (x86)\ossec-agent\ossec.log" -Tail 100
+```
+

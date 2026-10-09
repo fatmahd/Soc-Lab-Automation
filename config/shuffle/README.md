@@ -32,3 +32,24 @@ Ce dossier contient la stack Shuffle et un script de synthesis des resultats ana
 - Verifier les variables OpenSearch et mots de passe.
 - Verifier les volumes mounts (shuffle-apps, shuffle-files).
 - Surveiller memoire de shuffle-opensearch.
+
+## Etapes et commandes
+
+Depuis la racine du projet:
+
+```bash
+docker compose -f config/shuffle/docker-compose.yaml up -d
+docker compose -f config/shuffle/docker-compose.yaml ps
+docker compose -f config/shuffle/docker-compose.yaml logs -f backend
+```
+
+Acces interface:
+- URL par defaut: http://localhost:3001
+
+Arreter la stack Shuffle:
+
+```bash
+docker compose -f config/shuffle/docker-compose.yaml down
+```
+
+Note: results_dynamic.py est prevu pour un contexte Shuffle (variables dynamiques) et pas pour une execution locale directe.

@@ -1,0 +1,28 @@
+{
+  "id": "172002",
+  "timestamp": "2026-10-06T11:25:10.000+00:00",
+  "agent": {
+    "name": "win-endpoint-07"
+  },
+  "rule": {
+    "id": "120301",
+    "level": 12,
+    "description": "Sysmon suspicious outbound connection",
+    "groups": ["windows", "sysmon", "network"]
+  },
+  "data": {
+    "http_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+  },
+  "win": {
+    "eventdata": {
+      "ipAddress": "192.168.56.10",
+      "destinationIp": "45.77.10.5",
+      "url": "https://cdn.bad-download.net/update.exe",
+      "sha256": "SHA256=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,MD5=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,SHA1=cccccccccccccccccccccccccccccccccccccccc",
+      "image": "C:\\Windows\\Temp\\update.exe",
+      "targetFilename": "C:\\Users\\Public\\update.exe",
+      "targetUserName": "operator@corp.local"
+    }
+  },
+  "full_log": "Sysmon EventID=3 outbound connection from 192.168.56.10 to 45.77.10.5"
+}

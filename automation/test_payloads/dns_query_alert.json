@@ -1,0 +1,25 @@
+{
+  "id": "172003",
+  "timestamp": "2026-10-06T11:30:45.000+00:00",
+  "agent": {
+    "name": "dns-sensor-01"
+  },
+  "rule": {
+    "id": "130401",
+    "level": 8,
+    "description": "Suspicious DNS query observed",
+    "groups": ["dns", "network", "linux"]
+  },
+  "data": {
+    "dns": {
+      "question": {
+        "name": "phishing-login.example.com"
+      }
+    },
+    "hostname": "workstation-44",
+    "email": "helpdesk@company.tld",
+    "uri": "https://phishing-login.example.com/reset?token=abc123",
+    "filename": "/tmp/invoice.docm"
+  },
+  "full_log": "named[1234]: query phishing-login.example.com from 10.2.3.4 contact abuse@evil.tld md5=d41d8cd98f00b204e9800998ecf8427e"
+}

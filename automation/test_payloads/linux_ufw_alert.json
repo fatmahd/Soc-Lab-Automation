@@ -1,0 +1,21 @@
+{
+  "id": "172001",
+  "timestamp": "2026-10-06T11:22:33.123+00:00",
+  "agent": {
+    "name": "linux-web-01"
+  },
+  "rule": {
+    "id": "100201",
+    "level": 10,
+    "description": "UFW blocked inbound connection",
+    "groups": ["firewall", "network", "linux"]
+  },
+  "data": {
+    "srcip": "203.0.113.45",
+    "dstip": "10.10.0.22",
+    "srcuser": "www-data",
+    "url": "http://malicious.example/login",
+    "user_agent": "curl/8.1.2"
+  },
+  "full_log": "Oct 6 11:22:33 linux-web-01 kernel: [UFW BLOCK] IN=eth0 OUT= SRC=203.0.113.45 DST=10.10.0.22 LEN=60 PROTO=TCP SPT=51515 DPT=22 WINDOW=64240 RES=0x00 SYN URGP=0 from 198.51.100.21 report-to soc.team@example.org"
+}

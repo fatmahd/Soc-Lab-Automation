@@ -472,7 +472,9 @@ def build_source_ref(
     """
     Construit une sourceRef stable pour éviter les doublons.
 
-        Mode par défaut: déduplication par fenêtre de temps contextuelle.
+        Mode par défaut: déduplication par fenêtre de temps et contenu.
+    Les modes window et strict incluent une empreinte JSON du payload,
+    hors id et timestamp de livraison. Une nouvelle preuve change la reference.
     Si WAZUH_DEDUP_MODE=alert_id, on garde le comportement historique.
 
         Modes:
@@ -571,6 +573,20 @@ def build_source_ref(
 
     if mode == "window":
         signature_parts.append(str(bucket))
+
+    evidence = {
+        key: value
+        for key, value in alert.items()
+        if key not in {"id", "timestamp"}
+    }
+    evidence_json = json.dumps(
+        evidence,
+        sort_keys=True,
+        ensure_ascii=True,
+        separators=(",", ":"),
+    )
+    evidence_digest = hashlib.sha256(evidence_json.encode("utf-8")).hexdigest()
+    signature_parts.append(evidence_digest)
 
     signature = "|".join(signature_parts)
 
@@ -938,7 +954,23 @@ def main() -> int:
         )
         return 0
 
-    if response.status_code == 409:
+    duplicate_response = response.status_code == 409
+
+    if response.status_code == 400:
+        try:
+            error_payload = response.json()
+        except ValueError:
+            error_payload = {}
+
+        if isinstance(error_payload, dict):
+            duplicate_response = (
+                error_payload.get("type") == "CreateError"
+                and safe_string(error_payload.get("message"), "").startswith(
+                    f"Alert external:wazuh:{source_ref} already exists in organisation "
+                )
+            )
+
+    if duplicate_response:
         print(
             "[INFO] Cette alerte existe déjà dans TheHive : "
             f"{source_ref}"

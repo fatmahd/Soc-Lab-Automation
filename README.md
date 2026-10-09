@@ -173,3 +173,121 @@ python3 scripts/validate_phase4_rule_ids.py --mode linux --container single-node
 powershell -ExecutionPolicy Bypass -File scripts/run_phase4_windows_attack_test.ps1 -TargetIp 10.10.0.33
 python scripts/validate_phase4_rule_ids.py --mode windows --container single-node-wazuh.manager-1
 ```
+
+
+
+1. Dashboard Command Center SOC
+Objectif:
+
+Avoir une vue globale en 30 secondes sur l’état sécurité.
+Contenu détaillé:
+
+KPI total alertes sur 24h.
+KPI alertes critiques sur 24h.
+Courbe alertes par heure sur 24h.
+Camembert alertes par niveau de sévérité.
+Top 10 agents qui génèrent le plus d’alertes.
+Top 10 règles les plus déclenchées.
+Tableau des 20 dernières alertes critiques avec timestamp, agent, rule id, description, source ip.
+Utilité:
+
+Prioriser rapidement les investigations.
+Voir si le SOC est en surcharge.
+Identifier immédiatement une machine bruyante ou compromise.
+2. Dashboard Détection et Qualité des Règles
+Objectif:
+
+Mesurer ce que détectent les règles et améliorer leur qualité.
+Contenu détaillé:
+
+Top rule id sur 7 jours.
+Top rule groups sur 7 jours.
+Histogramme alertes par rule level.
+Série temporelle des 10 rule id les plus fréquents.
+Tableau règles les plus répétitives par même source ip.
+Tableau règles critiques jamais vues récemment.
+KPI ratio bruit:
+alertes low severity / alertes totales.
+Utilité:
+
+Réduire les faux positifs.
+Optimiser les règles custom.
+Vérifier que les règles importantes déclenchent bien.
+3. Dashboard Menaces Réseau
+Objectif:
+
+Détecter scans, brute force réseau, C2 possible, flux anormaux.
+Contenu détaillé:
+
+Courbe événements réseau par heure.
+Top source ip externes.
+Top destination ip internes.
+Top ports ciblés.
+Répartition protocoles tcp, udp, icmp.
+Tableau alertes de scan et flood.
+Tableau événements firewall bloqués vs autorisés.
+Carte géographique des ip sources si la géolocalisation est activée.
+Utilité:
+
+Identifier rapidement l’attaquant principal.
+Voir si l’attaque est large ou ciblée.
+Donner des éléments concrets pour blocage ip ou segmentation.
+4. Dashboard Identité et Authentification
+Objectif:
+
+Surveiller les attaques sur comptes et accès.
+Contenu détaillé:
+
+KPI échecs login sur 24h.
+KPI succès login sur 24h.
+Courbe failed logon par heure.
+Top comptes avec le plus d’échecs.
+Top ip sources d’échecs d’authentification.
+Tableau détections brute force (Windows et Linux).
+Heatmap logins par heure et par jour.
+Tableau succès après plusieurs échecs (pattern suspect).
+Utilité:
+
+Détecter bruteforce, password spraying, tentative de prise de compte.
+Prioriser verrouillage compte, reset mot de passe, blocage ip.
+Détecter une compromission en phase initiale.
+5. Dashboard Endpoints et Santé des Agents
+Objectif:
+
+Garantir la visibilité SOC et voir les signaux compromission endpoint.
+Contenu détaillé:
+
+KPI agents connectés vs déconnectés.
+Liste agents inactifs depuis plus de X minutes.
+Courbe changements fichiers critiques (FIM) par hôte.
+Courbe alertes Sysmon process suspectes.
+Top commandes/processus à risque (PowerShell encodé, LOLBins, etc.).
+Tableau incidents système Linux (service failed, OOM, erreurs critiques).
+Tableau résumé par host:
+niveau max, nombre alertes, dernière alerte.
+Utilité:
+
+S’assurer que les agents remontent bien.
+Détecter activité malveillante endpoint tôt.
+Distinguer panne technique vs incident sécurité.
+Plan pratique pour construire ces 5 dashboards en Semaine 2:
+
+Jour 1: Command Center SOC.
+Jour 2: Détection et Qualité des Règles.
+Jour 3: Menaces Réseau.
+Jour 4: Identité et Authentification.
+Jour 5: Endpoints et Santé des Agents + ajustements.
+Si tu veux, je peux te donner ensuite la version opérationnelle:
+
+Les visualisations exactes à créer dans Wazuh une par une.
+Les filtres recommandés pour chaque widget.
+Une checklist validation pour savoir si chaque dashboard est prêt production.
+
+
+
+
+
+Vérification	Ce qu’on attend	Ton test
+1. Éviter les doublons	Envoyer exactement la même alerte deux fois : TheHive ne doit la créer qu’une fois.	Testé : le deuxième envoi a été refusé avec already exists.
+2. Conserver les nouvelles preuves	Envoyer un événement Sysmon différent, mais lié à la même attaque : sa nouvelle information doit être conservée.	Pas encore testé.
+3. Continuer si Cortex ne répond pas	Même si l’enrichissement dépasse son délai, l’alerte doit rester accessible dans TheHive pour l’analyste.	Pas encore testé.

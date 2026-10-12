@@ -2,7 +2,7 @@
 
 Ce projet implemente un lab SOC oriente detection, triage et orchestration.
 
-![Home Lab SOC Architecture](docs/assets/Home Lab SOC Architecture Infographic.png)
+![Home Lab SOC Architecture](docs/assets/soc-lab-image.png)
 
 Cette image represente la chaine complete de detection, investigation, enrichment et reponse.
 
